@@ -9,7 +9,19 @@ RUN  apt-get install git software-properties-common curl wget gettext libcairo2 
      apt-get install libpcre3-dev julia -y && \
      julia -e 'Pkg.init(); Pkg.update()' && \
      julia -e 'Pkg.add("DataFrames")
-               Pkg.add("StatsBase")' && \
-     julia -e 'Pkg.clone("https://github.com/dcjones/Showoff.jl"); Pkg.clone("https://github.com/benhamner/MachineLearning.jl"); Pkg.checkout("Gadfly"); Pkg.checkout("MachineLearning"); Pkg.pin("MachineLearning"); Pkg.resolve();'
+               Pkg.add("StatsBase")
+               Pkg.add("DataArrays")' && \
+     julia -e 'Pkg.clone("https://github.com/dcjones/Showoff.jl")
+               Pkg.clone("https://github.com/benhamner/MachineLearning.jl")
+               Pkg.checkout("Gadfly")
+               Pkg.checkout("MachineLearning")
+               Pkg.pin("MachineLearning"
+               Pkg.checkout("Optim")
+               Pkg.checkout("Calculus")
+               Pkg.checkout("DataArrays")
+               Pkg.resolve()'
+     julia -e 'using DataFrames
+               using Gadfly
+               using MachineLearning'
 
 CMD ["julia"]

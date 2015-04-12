@@ -14,7 +14,7 @@ RUN  apt-get install git software-properties-common curl wget gettext libcairo2 
      julia -e 'Pkg.clone("https://github.com/benhamner/MachineLearning.jl")' && \
      julia -e 'Pkg.checkout("Gadfly")' && \
      julia -e 'Pkg.checkout("MachineLearning")' && \
-     julia -e 'Pkg.pin("MachineLearning"' && \
+     julia -e 'Pkg.pin("MachineLearning")' && \
      julia -e 'Pkg.checkout("Optim")' && \
      julia -e 'Pkg.checkout("Calculus")' && \
      julia -e 'Pkg.checkout("DataArrays")' && \

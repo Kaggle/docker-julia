@@ -2,7 +2,8 @@
 
 FROM debian:jessie
 
-RUN  apt-get install git software-properties-common curl wget gettext libcairo2 libpango1.0-0 -y && \
+RUN  apt-get update && \
+     apt-get install git software-properties-common curl wget gettext libcairo2 libpango1.0-0 -y && \
      add-apt-repository ppa:staticfloat/julia-deps -y && \
      add-apt-repository ppa:staticfloat/julianightlies -y && \
      apt-get update -qq -y && \

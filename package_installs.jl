@@ -1,10 +1,24 @@
 metadata_packages = [
+    "Cairo",
     "Calculus",
+    "Clustering",
     "DataArrays",
     "DataFrames",
+    "DataFramesMeta",
+    "Distributions",
+    "Distance",
     "Gadfly",
+    "GLM",
+    "HypothesisTests",
+    "KernelDensity",
+    "Lora",
+    "MLBase",
+    "MultivariateStats",
+    "NMF",
     "Optim",
-    "StatsBase"]
+    "PDMats",
+    "StatsBase",
+    "TimeSeries"]
 
 Pkg.init()
 Pkg.update()

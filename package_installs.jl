@@ -31,7 +31,3 @@ Pkg.clone("https://github.com/benhamner/MachineLearning.jl")
 Pkg.pin("MachineLearning")
 
 Pkg.resolve()
-
-# try imports
-using Gadfly
-using MachineLearning

@@ -16,6 +16,6 @@ RUN  apt-get install git software-properties-common curl wget gettext libcairo2 
      cd /tmp/julia && \
      git checkout release-0.3 && \
      cd /tmp && \
-     julia julia/contrib/build_sysimg.jl /usr/lib/x86_64-linux-gnu/julia/sys native /tmp/userimg.jl --force
+     julia julia/contrib/build_sysimg.jl /usr/lib/x86_64-linux-gnu/julia/sys x86_64 /tmp/userimg.jl --force
 
 CMD ["julia"]

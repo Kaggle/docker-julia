@@ -21,7 +21,8 @@ metadata_packages = [
     "Optim",
     "PDMats",
     "StatsBase",
-    "TimeSeries"]
+    "TimeSeries",
+    "ZipFile"]
 
 Pkg.init()
 Pkg.update()

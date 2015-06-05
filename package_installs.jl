@@ -17,7 +17,6 @@ metadata_packages = [
     "Lora",
     "MLBase",
     "MultivariateStats",
-    "NearestNeighbors",
     "NMF",
     "Optim",
     "PDMats",
@@ -33,6 +32,7 @@ for package=metadata_packages
 end
 
 Pkg.clone("https://github.com/benhamner/MachineLearning.jl")
+Pkg.clone("https://github.com/johnmyleswhite/NearestNeighbors.jl")
 Pkg.pin("MachineLearning")
 
 Pkg.resolve()

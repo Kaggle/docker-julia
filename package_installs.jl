@@ -17,6 +17,7 @@ metadata_packages = [
     "Lora",
     "MLBase",
     "MultivariateStats",
+    "NearestNeighbors",
     "NMF",
     "Optim",
     "PDMats",

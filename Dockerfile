@@ -19,4 +19,4 @@ RUN  apt-get install git software-properties-common curl wget gettext libcairo2 
      julia julia/contrib/build_sysimg.jl /usr/lib/x86_64-linux-gnu/julia/sys core2 /tmp/userimg.jl --force
 
 CMD ["julia"]
-
+          

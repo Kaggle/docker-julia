@@ -20,6 +20,7 @@ metadata_packages = [
     "NMF",
     "Optim",
     "PDMats",
+    "RDatasets",
     "StatsBase",
     "TimeSeries",
     "ZipFile"]

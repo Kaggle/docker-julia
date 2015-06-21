@@ -6,6 +6,7 @@ metadata_packages = [
     "DataFrames",
     "DataFramesMeta",
     "Dates",
+    "DecisionTree",
     "Distributions",
     "Distance",
     "Gadfly",

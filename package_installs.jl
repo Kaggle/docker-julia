@@ -24,6 +24,7 @@ metadata_packages = [
     "RDatasets",
     "StatsBase",
     "TimeSeries",
+    "XGBoost"
     "ZipFile"]
 
 Pkg.init()

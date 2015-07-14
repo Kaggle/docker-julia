@@ -1,4 +1,5 @@
 metadata_packages = [
+    "BinDeps",
     "Cairo",
     "Calculus",
     "Clustering",

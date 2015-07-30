@@ -1,6 +1,6 @@
 # kaggle/julia dockerfile
 
-FROM ubuntu:14.04
+FROM ubuntu:trusty
 
 ADD package_installs.jl /tmp/package_installs.jl
 ADD userimg.jl          /tmp/userimg.jl

@@ -5,7 +5,7 @@ FROM ubuntu:14.04
 ADD package_installs.jl /tmp/package_installs.jl
 ADD userimg.jl          /tmp/userimg.jl
 
-RUN  apt-get install git software-properties-common curl wget gettext libcairo2 libpango1 -y && \
+RUN  apt-get install git software-properties-common curl wget gettext libcairo2 -y && \
      add-apt-repository ppa:staticfloat/julia-deps -y && \
      add-apt-repository ppa:staticfloat/juliareleases -y && \
      apt-get update -qq -y && \
@@ -19,4 +19,3 @@ RUN  apt-get install git software-properties-common curl wget gettext libcairo2 
      julia julia/contrib/build_sysimg.jl /usr/lib/x86_64-linux-gnu/julia/sys core2 /tmp/userimg.jl --force
 
 CMD ["julia"]
-          

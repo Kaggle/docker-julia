@@ -25,7 +25,6 @@ metadata_packages = [
     "RDatasets",
     "StatsBase",
     "TimeSeries",
-    "XGBoost",
     "ZipFile"]
 
 Pkg.init()
@@ -35,9 +34,9 @@ for package=metadata_packages
     Pkg.add(package)
 end
 
-# need latest XGBoost version for it to work
-Pkg.checkout("XGBoost")
-Pkg.pin("XGBoost")
+# need to build XGBoost version for it to work
+Pkg.clone("https://github.com/antinucleon/XGBoost.jl.git")
+Pkg.build("XGBoost")
 
 Pkg.clone("https://github.com/benhamner/MachineLearning.jl")
 Pkg.clone("https://github.com/johnmyleswhite/NearestNeighbors.jl")

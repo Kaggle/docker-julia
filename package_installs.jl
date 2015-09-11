@@ -23,6 +23,7 @@ metadata_packages = [
     "Optim",
     "PDMats",
     "RDatasets",
+    "SQLite",
     "StatsBase",
     "TimeSeries",
     "ZipFile"]

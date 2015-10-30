@@ -9,7 +9,7 @@ metadata_packages = [
     "Dates",
     "DecisionTree",
     "Distributions",
-    "Distance",
+    "Distances",
     "Gadfly",
     "GLM",
     "HDF5",

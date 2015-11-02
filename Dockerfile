@@ -20,4 +20,11 @@ RUN  apt-get install git software-properties-common curl wget libcairo2 libpango
 #     cd /tmp && \
 #     julia julia/contrib/build_sysimg.jl /usr/lib/x86_64-linux-gnu/julia/sys core2 /tmp/userimg.jl --force
 
+RUN  apt-get install -y python3-pip && \
+      pip3 install jupyter && \
+      cd /usr/local/src && git clone https://github.com/jupyter/nbconvert.git && \
+      cd nbconvert && python3 setup.py install && \
+      julia -e "Pkg.add(\"IJulia\")" && \
+      julia -e "Pkg.update()"
+
 CMD ["julia"]

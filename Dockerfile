@@ -11,16 +11,13 @@ RUN  apt-get install git software-properties-common curl wget libcairo2 libpango
      apt-get install libpcre3-dev -y && \
      apt-get install build-essential gettext -qq -y && \
      apt-get install hdf5-tools -qq -y && \
-     apt-get install -y gfortran
-
-RUN  apt-get install -y python
-
-RUN  apt-get install -y m4 cmake libssl-dev && \
+     apt-get install -y gfortran python m4 cmake libssl-dev && \
      cd /usr/local/src && git clone https://github.com/JuliaLang/julia.git && \
-     cd julia && make && make install
-     
-RUN  ln -s /usr/local/src/julia/julia /usr/local/bin/julia && julia /tmp/package_installs.jl
+     cd julia && make && make install && \
+     ln -s /usr/local/src/julia/julia /usr/local/bin/julia && \
+     julia /tmp/package_installs.jl
 
+# IJulia
 RUN   apt-get install -y python-pip python-dev libcurl4-openssl-dev && \
       pip install jupyter pycurl && \
       cd /usr/local/src && git clone https://github.com/jupyter/nbconvert.git && \
@@ -30,9 +27,12 @@ RUN   apt-get install -y python-pip python-dev libcurl4-openssl-dev && \
       julia -e "Pkg.update()" && \
       julia -e "Base.compilecache(\"ZMQ\"); Base.compilecache(\"Nettle\")"
 
-RUN julia -e "Base.compilecache(\"IJulia\")"
-
-RUN mkdir -p /root/.jupyter/kernels && cp -r /root/.local/share/jupyter/kernels/julia-0.5 /root/.jupyter/kernels && touch /root/.jupyter/jupyter_nbconvert_config.py && touch /root/.jupyter/migrated
+# Make sure IJulia doesn't need any compilation and that Jupyter won't try to
+# migrate old settings
+RUN julia -e "Base.compilecache(\"IJulia\")" && \
+    mkdir -p /root/.jupyter/kernels && \
+    cp -r /root/.local/share/jupyter/kernels/julia-0.5 /root/.jupyter/kernels && \
+    touch /root/.jupyter/jupyter_nbconvert_config.py && touch /root/.jupyter/migrated
 
 
 CMD ["julia"]

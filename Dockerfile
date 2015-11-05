@@ -1,19 +1,8 @@
 # kaggle/julia dockerfile
 
-FROM ubuntu:14.04
+FROM kaggle/juliabuild
 
-ADD package_installs.jl /tmp/package_installs.jl
-ADD userimg.jl          /tmp/userimg.jl
-
-RUN  apt-get install git software-properties-common curl wget libcairo2 libpango1.0-0 -qq -y && \
-     add-apt-repository ppa:staticfloat/julia-deps -y && \
-     apt-get update -qq -y && \
-     apt-get install libpcre3-dev -y && \
-     apt-get install build-essential gettext -qq -y && \
-     apt-get install hdf5-tools -qq -y && \
-     apt-get install -y gfortran python m4 cmake libssl-dev && \
-     cd /usr/local/src && git clone https://github.com/JuliaLang/julia.git && \
-     cd julia && make && make install && \
+RUN  cd /usr/local/src/julia && make && make install && \
      ln -s /usr/local/src/julia/julia /usr/local/bin/julia && \
      julia /tmp/package_installs.jl
 

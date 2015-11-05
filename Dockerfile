@@ -2,6 +2,8 @@
 
 FROM kaggle/juliabuild
 
+ADD package_installs.jl /tmp/package_installs.jl
+
 RUN  cd /usr/local/src/julia && make && make install && \
      ln -s /usr/local/src/julia/julia /usr/local/bin/julia && \
      julia /tmp/package_installs.jl

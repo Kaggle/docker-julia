@@ -25,6 +25,7 @@ metadata_packages = [
     "RDatasets",
     "SQLite",
     "StatsBase",
+    "TextAnalysis",
     "TimeSeries",
     "ZipFile"]
 

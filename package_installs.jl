@@ -25,16 +25,16 @@ metadata_packages = [
     "RDatasets",
     "SQLite",
     "StatsBase",
+    "TextAnalysis",
     "TimeSeries",
     "ZipFile"]
+
 
 Pkg.init()
 Pkg.update()
 
 for package=metadata_packages
     Pkg.add(package)
-    # Precompile all packages, so scripts can operate in a read-only container
-    Base.compilecache(package)
 end
 
 # need to build XGBoost version for it to work

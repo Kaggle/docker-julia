@@ -8,19 +8,6 @@ RUN  cd /usr/local/src/julia && make && make install && \
      ln -s /usr/local/src/julia/julia /usr/local/bin/julia && \
      julia /tmp/package_installs.jl
 
-# IJulia
-RUN   apt-get update && apt-get install -y python-pip python-dev libcurl4-openssl-dev && \
-        pip install jupyter pycurl && \
-        cd /usr/local/src && git clone https://github.com/jupyter/nbconvert.git && \
-        cd nbconvert && python setup.py install && \
-        julia -e "Pkg.add(\"IJulia\")" && \
-        julia -e "Pkg.build(\"IJulia\")" && \
-        julia -e "Pkg.update()" && \
-# Make sure Jupyter won't try to migrate old settings
-        mkdir -p /root/.jupyter/kernels && \
-        cp -r /root/.local/share/jupyter/kernels/julia-0.5 /root/.jupyter/kernels && \
-        touch /root/.jupyter/jupyter_nbconvert_config.py && touch /root/.jupyter/migrated
-
 # Pre-compiling packages within a Julia session doesn't seem to work at the moment.
 RUN julia -e "Base.compilecache(\"BinDeps\")" && \
     julia -e "Base.compilecache(\"Cairo\")" && \
@@ -59,8 +46,21 @@ RUN julia -e "Base.compilecache(\"MachineLearning\")" && \
     julia -e "Base.compilecache(\"MLBase\")" && \
     julia -e "Base.compilecache(\"Clustering\")"
     
-RUN julia -e "Base.compilecache(\"IJulia\")" && \
-    julia -e "Base.compilecache(\"ZMQ\")" && \
-    julia -e "Base.compilecache(\"Nettle\")"
+
+# IJulia
+RUN   apt-get update && apt-get install -y python-pip python-dev libcurl4-openssl-dev && \
+        pip install jupyter pycurl && \
+        cd /usr/local/src && git clone https://github.com/jupyter/nbconvert.git && \
+        cd nbconvert && python setup.py install && \
+        julia -e "Pkg.add(\"IJulia\")" && \
+        julia -e "Pkg.build(\"IJulia\")" && \
+        julia -e "Pkg.update()" && \
+# Make sure Jupyter won't try to migrate old settings
+        mkdir -p /root/.jupyter/kernels && \
+        cp -r /root/.local/share/jupyter/kernels/julia-0.5 /root/.jupyter/kernels && \
+        touch /root/.jupyter/jupyter_nbconvert_config.py && touch /root/.jupyter/migrated && \
+        julia -e "Base.compilecache(\"IJulia\")" && \
+        julia -e "Base.compilecache(\"ZMQ\")" && \
+        julia -e "Base.compilecache(\"Nettle\")"
 
 CMD ["julia"]

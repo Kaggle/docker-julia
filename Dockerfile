@@ -54,7 +54,6 @@ RUN   apt-get update && apt-get install -y python-pip python-dev libcurl4-openss
         cd nbconvert && python setup.py install && \
         julia -e "Pkg.add(\"IJulia\")" && \
         julia -e "Pkg.build(\"IJulia\")" && \
-        julia -e "Pkg.update()" && \
 # Make sure Jupyter won't try to migrate old settings
         mkdir -p /root/.jupyter/kernels && \
         cp -r /root/.local/share/jupyter/kernels/julia-0.5 /root/.jupyter/kernels && \

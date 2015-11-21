@@ -60,6 +60,7 @@ RUN   apt-get update && apt-get install -y python-pip python-dev libcurl4-openss
         touch /root/.jupyter/jupyter_nbconvert_config.py && touch /root/.jupyter/migrated && \
         julia -e "Base.compilecache(\"IJulia\")" && \
         julia -e "Base.compilecache(\"ZMQ\")" && \
-        julia -e "Base.compilecache(\"Nettle\")"
+        julia -e "Base.compilecache(\"Nettle\")" && \
+        julia -e "using IJulia"
 
 CMD ["julia"]

@@ -43,7 +43,7 @@ RUN julia -e "Base.compilecache(\"BinDeps\")" && \
     julia -e "Base.compilecache(\"JSON\")" && \
     julia -e "Base.compilecache(\"KernelDensity\")" && \
     julia -e "Base.compilecache(\"Loess\")" && \
-    julia -e "Base.compilecache(\"Lora\")" && \
+    #julia -e "Base.compilecache(\"Lora\")" && \
     julia -e "Base.compilecache(\"MLBase\")" && \
     julia -e "Base.compilecache(\"MultivariateStats\")" && \
     julia -e "Base.compilecache(\"NMF\")" && \

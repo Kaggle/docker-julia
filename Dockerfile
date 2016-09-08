@@ -57,9 +57,7 @@ RUN julia -e "Base.compilecache(\"BinDeps\")" && \
     julia -e "Base.compilecache(\"ZipFile\")" && \
     julia -e "Base.compilecache(\"Gadfly\")" 
 
-RUN julia -e "Base.compilecache(\"MachineLearning\")" && \
-    julia -e "Base.compilecache(\"Lora\")" && \
-    julia -e "Base.compilecache(\"MLBase\")" && \
+RUN julia -e "Base.compilecache(\"MLBase\")" && \
     julia -e "Base.compilecache(\"Clustering\")"
     
 

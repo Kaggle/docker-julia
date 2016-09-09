@@ -64,8 +64,6 @@ RUN julia -e "Base.compilecache(\"MLBase\")" && \
 # IJulia
 RUN   apt-get update && apt-get install -y python-pip python-dev libcurl4-openssl-dev && \
         pip install jupyter pycurl && \
-        cd /usr/local/src && git clone https://github.com/jupyter/nbconvert.git && \
-        cd nbconvert && python setup.py install && \
         julia -e "Pkg.add(\"IJulia\")" && \
         julia -e "Pkg.build(\"IJulia\")" && \
 # Make sure Jupyter won't try to migrate old settings

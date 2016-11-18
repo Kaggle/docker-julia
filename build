@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+# Default behavior is to do everything from scratch.
+# The --use-cache option is useful if you're iterating on a broken build.
+if [[ "$1" ==  "--use-cache" ]]; then
+    docker build --rm -t kaggle/julia-build .
+else
+    docker pull ubuntu:16.04
+    docker build --rm --no-cache -t kaggle/julia-build .
+fi
+
+
+
+rm -rf /tmp/julia-build
+mkdir -p /tmp/julia-build/tmp
+mkdir -p /tmp/julia-build/devshm
+mkdir -p /tmp/julia-build/working
+docker run --rm -t --read-only --net=none -e HOME=/tmp -v $PWD:/input:ro -v /tmp/julia-build/working:/working -w=/working -v /tmp/julia-build/tmp:/tmp -v /tmp/julia-build/devshm:/dev/shm kaggle/julia-build /bin/bash -c 'julia /input/test_build.jl'
+
+docker tag kaggle/julia-build:latest kaggle/julia:latest
+docker push kaggle/julia:latest

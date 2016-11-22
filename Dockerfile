@@ -74,6 +74,6 @@ RUN   apt-get update && apt-get install -y python-pip python-dev libcurl4-openss
         julia -e "Base.compilecache(\"Nettle\")" && \
         julia -e "using IJulia"
 
-ADD juliarc.jl /tmp/.juliarc.jl
+ADD juliarc.jl /etc/juliarc.jl
 
 CMD ["julia"]

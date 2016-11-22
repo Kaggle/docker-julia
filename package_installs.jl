@@ -42,7 +42,6 @@ Pkg.clone("https://github.com/antinucleon/XGBoost.jl.git")
 Pkg.build("XGBoost")
 
 Pkg.clone("https://github.com/benhamner/MachineLearning.jl")
-Pkg.clone("https://github.com/johnmyleswhite/NearestNeighbors.jl")
 Pkg.pin("MachineLearning")
 
 Pkg.resolve()

@@ -62,7 +62,7 @@ RUN julia -e "Base.compilecache(\"MLBase\")" && \
     
 
 # IJulia
-RUN   apt-get update && apt-get install -y python-pip python-dev libcurl4-openssl-dev && \
+RUN   apt-get update && apt-get install -y python-pip python-dev libcurl4-openssl-dev libzmq3-dev && \
         pip install jupyter pycurl && \
         julia -e "Pkg.add(\"IJulia\")" && \
         julia -e "Pkg.build(\"IJulia\")" && \

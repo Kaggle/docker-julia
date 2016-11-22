@@ -21,6 +21,7 @@ RUN  apt-get update && \
      make -j 4 julia-deps && make -j 4 && make install && \
      ln -s /usr/local/src/julia/julia /usr/local/bin/julia
 
+ENV JULIA_PKGDIR /root/.julia/v0.6
 
 # Pre-compiling packages within a Julia session doesn't seem to work at the moment.
 RUN julia /tmp/package_installs.jl && \
@@ -74,6 +75,5 @@ RUN   apt-get update && apt-get install -y python-pip python-dev libcurl4-openss
         julia -e "Base.compilecache(\"Nettle\")" && \
         julia -e "using IJulia"
 
-ADD juliarc.jl /usr/local/src/julia/etc/juliarc.jl
 
 CMD ["julia"]

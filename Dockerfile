@@ -3,6 +3,8 @@
 FROM ubuntu:16.04
 
 
+ADD package_installs.jl /tmp/package_installs.jl
+
 RUN  apt-get update && \
      apt-get install git software-properties-common curl wget libcairo2 libpango1.0-0 -y && \
      add-apt-repository ppa:staticfloat/julia-deps -y && \
@@ -16,16 +18,13 @@ RUN  apt-get update && \
      # Use generic instruction set; see https://github.com/JuliaLang/julia/pull/6220
      #   and https://groups.google.com/forum/#!topic/julia-dev/Eqp0GhZWxME
      echo "JULIA_CPU_TARGET=core2" > Make.user && \
-     make -j 4 julia-deps
+     make -j 4 julia-deps && make -j 4 && make install && \
+     ln -s /usr/local/src/julia/julia /usr/local/bin/julia
 
-ADD package_installs.jl /tmp/package_installs.jl
-
-RUN  cd /usr/local/src/julia && make && make install && \
-     ln -s /usr/local/src/julia/julia /usr/local/bin/julia && \
-     julia /tmp/package_installs.jl
 
 # Pre-compiling packages within a Julia session doesn't seem to work at the moment.
-RUN julia -e "Base.compilecache(\"BinDeps\")" && \
+RUN julia /tmp/package_installs.jl && \
+    julia -e "Base.compilecache(\"BinDeps\")" && \
     julia -e "Base.compilecache(\"Cairo\")" && \
     julia -e "Base.compilecache(\"Calculus\")" && \
     julia -e "Base.compilecache(\"Clustering\")" && \

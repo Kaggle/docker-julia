@@ -1,5 +1,4 @@
 println("Starting...")
-using MachineLearning
 using DataFrames
 using Gadfly
 using TextAnalysis

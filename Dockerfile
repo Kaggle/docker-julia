@@ -14,7 +14,7 @@ RUN  apt-get update && \
      apt-get install -y gfortran python && \
      apt-get install -y m4 cmake libssl-dev && \
      cd /usr/local/src && git clone https://github.com/JuliaLang/julia.git && \
-     cd julia && \
+     cd julia && git checkout v0.6.0 && \
      # Use generic instruction set; see https://github.com/JuliaLang/julia/pull/6220
      #   and https://groups.google.com/forum/#!topic/julia-dev/Eqp0GhZWxME
      echo "JULIA_CPU_TARGET=core2" > Make.user && \

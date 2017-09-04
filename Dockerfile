@@ -23,9 +23,22 @@ RUN  apt-get update && \
 
 ENV JULIA_PKGDIR /root/.julia/v0.6
 
-# Pre-compiling packages within a Julia session doesn't seem to work at the moment.
-RUN julia /tmp/package_installs.jl && \
-    julia -e "Base.compilecache(\"BinDeps\")" && \
+RUN julia /tmp/package_installs.jl
+    
+# IJulia
+RUN   apt-get update && apt-get install -y python3-pip python3-dev && pip3 install jupyter && \
+        julia -e "Pkg.add(\"Nettle\")" && \
+        julia -e "Pkg.add(\"IJulia\")" && \
+        julia -e "Pkg.build(\"IJulia\")" && \
+# Make sure Jupyter won't try to migrate old settings
+        mkdir -p /root/.jupyter/kernels && \
+        cp -r /root/.local/share/jupyter/kernels/julia-0.6 /root/.jupyter/kernels && \
+        touch /root/.jupyter/jupyter_nbconvert_config.py && touch /root/.jupyter/migrated && \
+        julia -e "Base.compilecache(\"IJulia\")" && \
+        julia -e "Base.compilecache(\"ZMQ\")" && \
+        julia -e "Base.compilecache(\"Nettle\")"
+
+RUN julia -e "Base.compilecache(\"BinDeps\")" && \
     julia -e "Base.compilecache(\"Cairo\")" && \
     julia -e "Base.compilecache(\"Calculus\")" && \
     julia -e "Base.compilecache(\"Clustering\")" && \
@@ -55,25 +68,9 @@ RUN julia /tmp/package_installs.jl && \
     julia -e "Base.compilecache(\"TextAnalysis\")" && \
     julia -e "Base.compilecache(\"TimeSeries\")" && \
     julia -e "Base.compilecache(\"ZipFile\")" && \
-    julia -e "Base.compilecache(\"Gadfly\")" 
-
-RUN julia -e "Base.compilecache(\"MLBase\")" && \
-    julia -e "Base.compilecache(\"Clustering\")"
-    
-
-# IJulia
-RUN   apt-get update && apt-get install -y python3-pip python3-dev && pip3 install jupyter && \
-        julia -e "Pkg.add(\"Nettle\")" && \
-        julia -e "Pkg.add(\"IJulia\")" && \
-        julia -e "Pkg.build(\"IJulia\")" && \
-# Make sure Jupyter won't try to migrate old settings
-        mkdir -p /root/.jupyter/kernels && \
-        cp -r /root/.local/share/jupyter/kernels/julia-0.6 /root/.jupyter/kernels && \
-        touch /root/.jupyter/jupyter_nbconvert_config.py && touch /root/.jupyter/migrated && \
-        julia -e "Base.compilecache(\"IJulia\")" && \
-        julia -e "Base.compilecache(\"ZMQ\")" && \
-        julia -e "Base.compilecache(\"Nettle\")" && \
-        julia -e "using IJulia"
-
+    julia -e "Base.compilecache(\"Gadfly\")" && \
+    julia -e "Base.compilecache(\"MLBase\")" && \
+    julia -e "Base.compilecache(\"Clustering\")" && \
+    julia -e "using IJulia"
 
 CMD ["julia"]

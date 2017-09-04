@@ -63,6 +63,7 @@ RUN julia -e "Base.compilecache(\"MLBase\")" && \
 
 # IJulia
 RUN   apt-get update && apt-get install -y python3-pip python3-dev && pip3 install jupyter && \
+        julia -e "Pkg.add(\"Nettle\")" && \
         julia -e "Pkg.add(\"IJulia\")" && \
         julia -e "Pkg.build(\"IJulia\")" && \
 # Make sure Jupyter won't try to migrate old settings

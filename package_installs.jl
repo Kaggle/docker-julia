@@ -62,4 +62,7 @@ Pkg.build("XGBoost")
 Pkg.clone("https://github.com/benhamner/MachineLearning.jl")
 Pkg.pin("MachineLearning")
 
+Pkg.clone("https://github.com/Allardvm/LightGBM.jl.git")
+ENV["LIGHTGBM_PATH"] = "../LightGBM"
+
 Pkg.resolve()

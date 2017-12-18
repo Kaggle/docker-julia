@@ -1,32 +1,50 @@
 metadata_packages = [
     "BinDeps",
+    "Bootstrap",
     "Cairo",
     "Calculus",
     "Clustering",
+    "CSV",
     "DataArrays",
     "DataFrames",
     "DataFramesMeta",
+    "DataStreams",
     "Dates",
     "DecisionTree",
     "Distributions",
     "Distances",
+    "Feather",
+    "Flux",
     "Gadfly",
     "GLM",
+    "GR",
     "HDF5",
     "HypothesisTests",
     "JSON",
+    "JLD2",
     "KernelDensity",
-    "Lora",
+    "Klara",
+    "Mamba",
+    "ManifoldLearning",
     "MLBase",
     "MultivariateStats",
     "NMF",
+    "OnlineStats",
     "Optim",
+    "Pandas",
+    "Plots",
+    "PyCall",
+    "PyPlot",
     "PDMats",
     "RDatasets",
     "SQLite",
     "StatsBase",
+    "TensorFlow",
     "TextAnalysis",
+    "TSne",
+    "Turing",
     "TimeSeries",
+    "Query",
     "ZipFile"]
 
 
@@ -43,5 +61,8 @@ Pkg.build("XGBoost")
 
 Pkg.clone("https://github.com/benhamner/MachineLearning.jl")
 Pkg.pin("MachineLearning")
+
+Pkg.clone("https://github.com/Allardvm/LightGBM.jl.git")
+ENV["LIGHTGBM_PATH"] = "../LightGBM"
 
 Pkg.resolve()

@@ -14,17 +14,18 @@ RUN  apt-get update && \
      apt-get install -y gfortran python && \
      apt-get install -y m4 cmake libssl-dev && \
      cd /usr/local/src && git clone https://github.com/JuliaLang/julia.git && \
-     cd julia && git checkout v0.6.0 && \
+     cd julia && git checkout v0.6.2 && \
      # Use generic instruction set; see https://github.com/JuliaLang/julia/pull/6220
      #   and https://groups.google.com/forum/#!topic/julia-dev/Eqp0GhZWxME
      echo "JULIA_CPU_TARGET=core2" > Make.user && \
+     echo "OPENBLAS_TARGET_ARCH=NEHALEM" > Make.user && \
      make -j 4 julia-deps && make -j 4 && make install && \
      ln -s /usr/local/src/julia/julia /usr/local/bin/julia
 
 ENV JULIA_PKGDIR /root/.julia/v0.6
 
 RUN julia /tmp/package_installs.jl
-    
+
 # IJulia
 RUN   apt-get update && apt-get install -y python3-pip python3-dev && pip3 install jupyter && \
         julia -e "Pkg.add(\"Nettle\")" && \

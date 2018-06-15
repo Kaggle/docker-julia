@@ -6,7 +6,7 @@ set -e
 if [[ "$1" ==  "--use-cache" ]]; then
     docker build --rm -t kaggle/julia-build .
 else
-    docker pull ubuntu:16.04
+    docker pull julia:0.6.4
     docker build --rm --no-cache -t kaggle/julia-build .
 fi
 

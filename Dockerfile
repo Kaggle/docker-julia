@@ -1,43 +1,44 @@
 # kaggle/julia dockerfile
 
-FROM ubuntu:16.04
-
+FROM julia:0.6.4
 
 ADD package_installs.jl /tmp/package_installs.jl
+ADD test_build.jl /tmp/test_build.jl
 
-RUN  apt-get update && \
-     apt-get install git software-properties-common curl wget libcairo2 libpango1.0-0 -y && \
-     add-apt-repository ppa:staticfloat/julia-deps -y && \
-     apt-get update -y && \
-     apt-get install -y libpcre3-dev build-essential && \
-     apt-get install -y gettext hdf5-tools && \
-     apt-get install -y gfortran python && \
-     apt-get install -y m4 cmake libssl-dev && \
-     cd /usr/local/src && git clone https://github.com/JuliaLang/julia.git && \
-     cd julia && git checkout v0.6.2 && \
-     # Use generic instruction set; see https://github.com/JuliaLang/julia/pull/6220
-     #   and https://groups.google.com/forum/#!topic/julia-dev/Eqp0GhZWxME
-     echo "JULIA_CPU_TARGET=core2" > Make.user && \
-     echo "OPENBLAS_TARGET_ARCH=NEHALEM" > Make.user && \
-     make -j 4 julia-deps && make -j 4 && make install && \
-     ln -s /usr/local/src/julia/julia /usr/local/bin/julia
+RUN apt-get update && \
+    apt-get install -y build-essential gettext git hdf5-tools libcairo2 libpango1.0-0 python3 python3-dev python3-pip
 
-ENV JULIA_PKGDIR /root/.julia/v0.6
+# Pycall
+ENV PYTHON /usr/bin/python3
+
+# Conda
+ENV CONDA_JL_VERSION 3
+
+ENV JULIA_PKGDIR /root/.julia/
+RUN julia -e "Pkg.init()"
+ADD REQUIRE /root/.julia/v0.6/REQUIRE
 
 RUN julia /tmp/package_installs.jl
 
 # IJulia
-RUN   apt-get update && apt-get install -y python3-pip python3-dev && pip3 install jupyter && \
-        julia -e "Pkg.add(\"Nettle\")" && \
-        julia -e "Pkg.add(\"IJulia\")" && \
-        julia -e "Pkg.build(\"IJulia\")" && \
-# Make sure Jupyter won't try to migrate old settings
-        mkdir -p /root/.jupyter/kernels && \
-        cp -r /root/.local/share/jupyter/kernels/julia-0.6 /root/.jupyter/kernels && \
-        touch /root/.jupyter/jupyter_nbconvert_config.py && touch /root/.jupyter/migrated && \
-        julia -e "Base.compilecache(\"IJulia\")" && \
-        julia -e "Base.compilecache(\"ZMQ\")" && \
-        julia -e "Base.compilecache(\"Nettle\")"
+RUN pip3 install jupyter && \
+    julia -e "Pkg.add(\"Nettle\")" && \
+    julia -e "Pkg.add(\"IJulia\")" && \
+    # Make sure Jupyter won't try to migrate old settings
+    mkdir -p /root/.jupyter/kernels && \
+    cp -r /root/.local/share/jupyter/kernels/julia-0.6 /root/.jupyter/kernels && \
+    touch /root/.jupyter/jupyter_nbconvert_config.py && touch /root/.jupyter/migrated && \
+    julia -e "Base.compilecache(\"IJulia\")" && \
+    julia -e "Base.compilecache(\"ZMQ\")" && \
+    julia -e "Base.compilecache(\"Nettle\")"
+
+# TensorFlow
+RUN pip3 install tensorflow && \
+    julia -e "Pkg.add(\"TensorFlow\")" && \
+    julia -e "Base.compilecache(\"TensorFlow\")"
+
+RUN julia -e "Pkg.status()" && \
+    julia /tmp/test_build.jl
 
 RUN julia -e "Base.compilecache(\"BinDeps\")" && \
     julia -e "Base.compilecache(\"Cairo\")" && \
@@ -47,7 +48,6 @@ RUN julia -e "Base.compilecache(\"BinDeps\")" && \
     julia -e "Base.compilecache(\"DataArrays\")" && \
     julia -e "Base.compilecache(\"DataFrames\")" && \
     julia -e "Base.compilecache(\"DataFramesMeta\")" && \
-    julia -e "Base.compilecache(\"Dates\")" && \
     julia -e "Base.compilecache(\"DecisionTree\")" && \
     julia -e "Base.compilecache(\"Distributions\")" && \
     julia -e "Base.compilecache(\"Distances\")" && \
@@ -57,7 +57,6 @@ RUN julia -e "Base.compilecache(\"BinDeps\")" && \
     julia -e "Base.compilecache(\"JSON\")" && \
     julia -e "Base.compilecache(\"KernelDensity\")" && \
     julia -e "Base.compilecache(\"Loess\")" && \
-    #julia -e "Base.compilecache(\"Lora\")" && \
     julia -e "Base.compilecache(\"MLBase\")" && \
     julia -e "Base.compilecache(\"MultivariateStats\")" && \
     julia -e "Base.compilecache(\"NMF\")" && \

@@ -1,15 +1,16 @@
+using Pkg
+Pkg.update()
+
 metadata_packages = [
     "BinDeps",
-    "Bootstrap",
     "Cairo",
     "Calculus",
     "Clustering",
+    "Compose",
+    "Conda",
     "CSV",
-    "DataArrays",
     "DataFrames",
     "DataFramesMeta",
-    "DataStreams",
-    "Dates",
     "DecisionTree",
     "Distributions",
     "Distances",
@@ -23,11 +24,9 @@ metadata_packages = [
     "JSON",
     "JLD2",
     "KernelDensity",
-    "Klara",
-    "Mamba",
-    "ManifoldLearning",
     "MLBase",
     "MultivariateStats",
+    "Loess",
     "NMF",
     "OnlineStats",
     "Optim",
@@ -39,30 +38,12 @@ metadata_packages = [
     "RDatasets",
     "SQLite",
     "StatsBase",
-    "TensorFlow",
     "TextAnalysis",
     "TSne",
     "Turing",
     "TimeSeries",
     "Query",
-    "ZipFile"]
+    "ZipFile",
+    "ZMQ"]
 
-
-Pkg.init()
-Pkg.update()
-
-for package=metadata_packages
-    Pkg.add(package)
-end
-
-# need to build XGBoost version for it to work
-Pkg.clone("https://github.com/antinucleon/XGBoost.jl.git")
-Pkg.build("XGBoost")
-
-Pkg.clone("https://github.com/benhamner/MachineLearning.jl")
-Pkg.pin("MachineLearning")
-
-Pkg.clone("https://github.com/Allardvm/LightGBM.jl.git")
-ENV["LIGHTGBM_PATH"] = "../LightGBM"
-
-Pkg.resolve()
+Pkg.add(metadata_packages)
